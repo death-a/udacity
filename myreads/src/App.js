@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import * as BooksAPI from './BooksAPI';
+import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [booksList, setBooksList] = useState([]);
+
+  useEffect(() => {
+    const getBooks = async () => {
+      const res = await BooksAPI.getAll();
+      console.log(res);
+      setBooksList(res);
+    };
+    getBooks();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>Books Info</h2>
+      <div>
+        <ol>
+        {
+          booksList.map((book) => (
+            <li key={book.id}>
+              {`Title: ${book.title}, Shelf: ${book.shelf}, Authors: ${book.authors}`}
+            </li>
+          ))
+        }
+        </ol>
+      </div>
     </div>
   );
 }
