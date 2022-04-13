@@ -1,7 +1,7 @@
 import './App.css';
 import * as BooksAPI from './BooksAPI';
-import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
+import BookShelf from './BookShelf';
 
 function App() {
   const [booksList, setBooksList] = useState([]);
@@ -9,25 +9,16 @@ function App() {
   useEffect(() => {
     const getBooks = async () => {
       const res = await BooksAPI.getAll();
-      console.log(res);
+      //console.log(res);
       setBooksList(res);
     };
     getBooks();
   }, []);
   return (
     <div>
-      <h2>Books Info</h2>
-      <div>
-        <ol>
-        {
-          booksList.map((book) => (
-            <li key={book.id}>
-              {`Title: ${book.title}, Shelf: ${book.shelf}, Authors: ${book.authors}`}
-            </li>
-          ))
-        }
-        </ol>
-      </div>
+      <h2>MyReads</h2>
+      <BookShelf booksList={booksList} />
+      
     </div>
   );
 }
