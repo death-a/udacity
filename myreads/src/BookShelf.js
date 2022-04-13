@@ -14,7 +14,7 @@ const BookShelf = ({ booksList }) => {
                 const key = (Object.keys(shelf))[0];
                 return (
                     <ol key={key}> {shelf[key]}
-                        <Shelf books={(booksList.filter(b => b.shelf === key))} />
+                        <Shelf books={(booksList.filter(b => b.shelf === key))} shelf={key} />
                     </ol> 
                 )
                 })

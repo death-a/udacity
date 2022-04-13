@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
+import BookInfo from './BookInfo';
 
-const Shelf = ({ books }) => {
+const Shelf = ({ books, shelf }) => {
     return (
         books.map((book) => (
             <li key={book.id}>
-            {`Title: ${book.title}, Shelf: ${book.shelf}, Authors: ${book.authors}`}
+                <BookInfo book={book} shelf={shelf} />
             </li>
         ))
     )
@@ -12,6 +13,7 @@ const Shelf = ({ books }) => {
 
 Shelf.propTypes = {
     books: PropTypes.array.isRequired,
+    shelf: PropTypes.string.isRequired,
 }
 
 export default Shelf;
