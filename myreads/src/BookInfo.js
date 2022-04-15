@@ -3,7 +3,8 @@ import * as BooksAPI from './BooksAPI';
 import { useState } from 'react';
 
 const BookInfo = ({ book, onChangeShelf }) => {
-    const [shelfValue, setShelfValue] = useState(book.shelf);
+    const [shelfValue, setShelfValue] = useState((book.shelf === undefined) ? "none" : book.shelf);
+    //console.log("BookInfo",shelfValue);
     const shelfChange = (e) => {
         const selectedShelf = e.target.value;
         if(shelfValue !== selectedShelf) {
