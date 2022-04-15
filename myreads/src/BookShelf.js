@@ -9,7 +9,6 @@ const BookShelf = () => {
         const getBooks = async () => {
             const res = await BooksAPI.getAll();
             //const shelves = [ 'currentlyReading', 'wantToRead', 'read' ];
-            console.log(res);
             /*let shelvesIn = {}
             for(const shelf of shelves) {
                 let booksIDs = []
@@ -25,11 +24,9 @@ const BookShelf = () => {
         getBooks();
     }, []);
 
-    const updateShelf = (response) => {
-        console.log("update book list", response);
+    const updateShelf = () => {
         const getAllBooks = async () => {
             const res = await BooksAPI.getAll();
-            console.log("updt", res);
             setBooksList(res);
         }
         getAllBooks();
@@ -46,7 +43,7 @@ const BookShelf = () => {
                 Object.keys(shelvesInfo).map((shelf) => {
                 return (
                     <ol key={shelf}> {shelvesInfo[shelf]}
-                        <Shelf books={(booksList.filter(b => b.shelf === shelf))} shelf={shelf} onUpdateShelf={updateShelf} />
+                        <Shelf books={(booksList.filter(b => b.shelf === shelf))} onUpdateShelf={updateShelf} />
                     </ol>
                 )
                 })
