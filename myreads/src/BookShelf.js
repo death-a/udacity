@@ -1,37 +1,7 @@
 import Shelf from "./Shelf";
-import * as BooksAPI from './BooksAPI';
-import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
-const BookShelf = () => {
-    const [booksList, setBooksList] = useState([]);
-
-    useEffect(() => {
-        const getBooks = async () => {
-            const res = await BooksAPI.getAll();
-            //const shelves = [ 'currentlyReading', 'wantToRead', 'read' ];
-            /*let shelvesIn = {}
-            for(const shelf of shelves) {
-                let booksIDs = []
-                for(const book of res) {
-                    if(book.shelf === shelf) {
-                        booksIDs.push(book.id);
-                    }
-                }
-                shelvesIn[shelf] = booksIDs;
-            }*/
-            setBooksList(res);
-        };
-        getBooks();
-    }, []);
-
-    const updateShelf = () => {
-        const getAllBooks = async () => {
-            const res = await BooksAPI.getAll();
-            setBooksList(res);
-        }
-        getAllBooks();
-    }
-
+const BookShelf = ({ booksList, updateShelf}) => {
     const shelvesInfo = {
         currentlyReading: 'Currently Reading',
         wantToRead: 'Want To Read',
@@ -48,6 +18,7 @@ const BookShelf = () => {
                 )
                 })
             }
+            <Link to="/search" >Search Books</Link>
         </div>
     )
 }

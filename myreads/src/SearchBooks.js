@@ -1,8 +1,9 @@
 import Shelf from "./Shelf";
 import { useState } from "react";
 import * as BooksAPI from './BooksAPI';
+import { Link } from "react-router-dom";
 
-const SearchBooks = () => {
+const SearchBooks = ({ shelfWiseBooks }) => {
     const [booksList, setBooksList] = useState([]);
     const [searchText, setSearchText] = useState("");
 
@@ -21,6 +22,7 @@ const SearchBooks = () => {
             const searchBooks = async () => {
                 const res = await BooksAPI.search(query, 20);
                 if(res.error === undefined) {
+                    console.log(res);
                     setBooksList(res);
                 }
             };
@@ -42,8 +44,9 @@ const SearchBooks = () => {
     }
     return (
         <div>
+            <Link to="/" >Go Back</Link>
             <input type="text" value={searchText} onChange={(event) => searchQuery(event.target.value)} />
-            <Shelf books={booksList} onUpdateShelf={updateShelf} />
+            <Shelf books={booksList} onUpdateShelf={updateShelf} shelfWiseBooks={shelfWiseBooks} />
         </div>
     )
 }
