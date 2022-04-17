@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as BooksAPI from './BooksAPI';
 import { Link } from "react-router-dom";
 
-const SearchBooks = ({ shelfWiseBooks }) => {
+const SearchBooks = ({ shelfWiseBooks, updateShelf }) => {
     const [booksList, setBooksList] = useState([]);
     const [searchText, setSearchText] = useState("");
 
@@ -34,14 +34,6 @@ const SearchBooks = ({ shelfWiseBooks }) => {
         setSearchText(query);
     }
 
-    const updateShelf = () => {
-        console.log("search update")
-        /*const getAllBooks = async () => {
-            const res = await BooksAPI.getAll();
-            setBooksList(res);
-        }
-        getAllBooks();*/
-    }
     return (
         <div>
             <Link to="/" >Go Back</Link>

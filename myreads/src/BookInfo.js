@@ -26,7 +26,7 @@ const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
         if(getShelfValue() !== selectedShelf) {
             const changeShelf = async () => {
                 const res = await BooksAPI.update(book, selectedShelf);
-                onChangeShelf();
+                onChangeShelf(res);
             }
             changeShelf();
             //setShelfValue(selectedShelf);
