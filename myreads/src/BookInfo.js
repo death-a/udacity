@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import * as BooksAPI from './BooksAPI';
 
 const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
     const getShelfValue = () => {
@@ -8,11 +7,11 @@ const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
             shelfval = book.shelf;
         } else {
             if(shelfWiseBooks !== undefined) {
-                Object.keys(shelfWiseBooks).map((shelf) => {
+                for(const shelf of Object.keys(shelfWiseBooks)) {
                     if(shelfWiseBooks[shelf].includes(book.id)) {
                         shelfval = shelf;
                     }
-                });
+                }
             } else {
                 console.log("Shelf Wise Books array is not present");
             }
@@ -20,28 +19,37 @@ const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
         return shelfval;
     }
 
-    console.log("BookInfo", getShelfValue());
+    //console.log("BookInfo", getShelfValue());
     const shelfChange = (e) => {
         const selectedShelf = e.target.value;
         if(getShelfValue() !== selectedShelf) {
-            const changeShelf = async () => {
-                const res = await BooksAPI.update(book, selectedShelf);
-                onChangeShelf(res);
-            }
-            changeShelf();
+            onChangeShelf(book, selectedShelf, (shelfWiseBooks !== undefined));
             //setShelfValue(selectedShelf);
         }
     }
     return (
-        <div>
-            <select id={book.id} defaultValue={getShelfValue()} onChange={shelfChange}>
-                <option value="none" disabled>{getShelfValue() === "none" ? "Add to.." : "Move to.."}</option>
-                <option value="currentlyReading" >Currently Reading</option>
-                <option value="wantToRead" >Want To Read</option>
-                <option value="read" >Read</option>
-            </select>
-            <p>{book.title}</p>
-            <p>{(book.authors)}</p>
+        <div key={book.id} className='book'>
+            <div className='book-top'>
+                <div className='book-cover' 
+                    style={{
+                        width: 128,
+                        height: 193,
+                        backgroundImage: ("imageLinks" in book) ? `url(${book.imageLinks['smallThumbnail']})` : ``
+                        }}>
+                </div>
+                <div className="book-shelf-changer">
+                    <select defaultValue={getShelfValue()} onChange={shelfChange}>
+                        <option value="default" disabled>{getShelfValue() === "none" ? "Add to..." : "Move to..."}</option>
+                        <option value="currentlyReading" >Currently Reading</option>
+                        <option value="wantToRead" >Want To Read</option>
+                        <option value="read" >Read</option>
+                        {(getShelfValue() === "none") ? <option value="none" >None</option> : ""}
+                    </select>
+                </div>
+            </div>
+
+            <div className="book-title">{("title" in book) ? book.title : ""}</div>
+            <div className="book-authors">{("authors" in book) ? (book.authors).join(", ") : ""}</div>
         </div>
     )
 }
@@ -49,6 +57,7 @@ const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
 BookInfo.propTypes = {
     book: PropTypes.object.isRequired,
     onChangeShelf: PropTypes.func.isRequired,
+    shelfWiseBooks: PropTypes.object,
 }
 
 export default BookInfo;

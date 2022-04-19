@@ -1,19 +1,32 @@
 import PropTypes from 'prop-types';
-import BookInfo from './BookInfo';
+import BooksList from './BooksList';
 
-const Shelf = ({ books, onUpdateShelf, shelfWiseBooks }) => {
-    return (
-        books.map((book) => (
-            <li key={book.id}>
-                <BookInfo book={book} onChangeShelf={onUpdateShelf} shelfWiseBooks={shelfWiseBooks} />
-            </li>
+const Shelf = ({booksList, updateShelf}) => {
+    const shelvesInfo = {
+        currentlyReading: 'Currently Reading',
+        wantToRead: 'Want To Read',
+        read: 'Read',
+    };
+
+    return(
+        Object.keys(booksList).map((shelf) => (
+            <div key={shelf} >
+                <div className="bookshelf">
+                    <h2 className="bookshelf-title">{shelvesInfo[shelf]}</h2>
+                    <div className="bookshelf-books">
+                        <ol className="books-grid">
+                            <BooksList books={booksList[shelf]} onUpdateShelf={updateShelf} />
+                        </ol>
+                    </div>
+                </div>
+            </div>
         ))
     )
 }
 
 Shelf.propTypes = {
-    books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired,
+    booksList: PropTypes.object.isRequired,
+    updateShelf: PropTypes.func.isRequired,
 }
 
 export default Shelf;

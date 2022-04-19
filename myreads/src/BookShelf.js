@@ -1,50 +1,52 @@
 import Shelf from "./Shelf";
-import * as BooksAPI from './BooksAPI';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 import { useState, useEffect } from "react";
 
-const BookShelf = ({ booksIDsList, updateShelf}) => {
-    const [booksList, setBooksList] = useState([]);
+const BookShelf = ({ booksList, shelfWiseBooks, updateShelf}) => {
+    const [shelfBooks, setshelfBooks] = useState({})
 
     useEffect(() => {
-        const getBooks = () => {
-            console.log("BookShelf", booksIDsList);
-            let booksListArr = [];
-            Object.keys(booksIDsList).map( async (shelf) => {
-                console.log("BookShelf", booksIDsList[shelf]);
-                for(const bookID of booksIDsList[shelf]) {
-                    const res = await BooksAPI.get(bookID);
-                    console.log("BookShelf", res);
-                    booksListArr.push(res);
+        const createBookShelvesList = () => {
+            //const shelves = [ 'currentlyReading', 'wantToRead', 'read' ];
+            //console.log("BookShelf", booksList);
+            //console.log("BookShelf", shelfWiseBooks);
+            let shelvesIn = {};
+            if(shelfWiseBooks !== undefined) {
+                for(const shelf of Object.keys(shelfWiseBooks)) {
+                    let books = [];
+                    for(const book of booksList) {
+                        if(book.shelf === shelf) {
+                            books.push(book);
+                        }
+                    }
+                    shelvesIn[shelf] = books;
                 }
-                console.log("BookShelf", booksListArr);
-                setBooksList([...booksListArr, booksListArr]);
-            });
-            //setBooksList(booksListArr);
-        }
-        getBooks();
-    }, [booksIDsList]);
-
-    const shelvesInfo = {
-        currentlyReading: 'Currently Reading',
-        wantToRead: 'Want To Read',
-        read: 'Read', 
-    };
-
-    return (    
-        <div>
-            {
-                Object.keys(shelvesInfo).map((shelf) => {
-                return (
-                    <ol key={shelf}> {shelvesInfo[shelf]}
-                        <Shelf books={(booksList.filter(b => b.shelf === shelf))} onUpdateShelf={updateShelf} />
-                    </ol>
-                )
-                })
             }
-            <Link to="/search" >Search Books</Link>
+            setshelfBooks({...shelvesIn});
+        }
+        createBookShelvesList();
+    }, [booksList, shelfWiseBooks])
+
+    return (
+        <div className="list-books">
+            <div className="list-books-title">
+                <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+                <Shelf booksList={shelfBooks} updateShelf={updateShelf} />
+            </div>
+            <div className="open-search">
+                <Link to="/search" >Search Books</Link>
+            </div>
         </div>
     )
+}
+
+BookShelf.propTypes = {
+    booksList: PropTypes.array.isRequired,
+    shelfWiseBooks: PropTypes.object.isRequired,
+    updateShelf: PropTypes.func.isRequired,
 }
 
 export default BookShelf;
