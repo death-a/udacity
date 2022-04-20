@@ -8,29 +8,42 @@ const SearchBooks = ({ shelfWiseBooks, updateShelf }) => {
     const [booksList, setBooksList] = useState([]);
     const [searchText, setSearchText] = useState("");
 
-    /*useEffect(() => {
-        const searchBooks = () => {
-            console.log("search", booksList, searchText);
-            //const res = await BooksAPI.search(query, 20);
-            //setBooksList(res);
-        };
-        searchBooks();
-    }, [booksList, searchText]);*/
+    useEffect(() => {
+        //console.log("search", searchText);
+        const timeOut = setTimeout(async () => {
+            //console.log("search query", searchText);
+            if(searchText !== "") {
+                const res = await BooksAPI.search(searchText, 20);
+                //console.log("search", res);
+                if(res !== undefined) {
+                    ("error" in res) ? setBooksList(res.items) : setBooksList(res);
+                }
+            } else {
+                setBooksList([]);
+            }
+        }, 500);
+
+        return () => clearTimeout(timeOut);
+    }, [searchText]);
 
     const searchQuery = (query) => {
         setSearchText(query);
-        if(query !== "") {
+        //if(query !== "") {
             const searchBooks = async () => {
                 const res = await BooksAPI.search(query, 20);
-                if(res.error === undefined) {
-                    //console.log("search query", res);
+                console.log("search result", res);
+                if(res !== undefined) {
+                    console.log("search query", query);
                     setBooksList(res);
+                } else {
+                    console.log("search query error", query);
+                    setBooksList([]);
                 }
             };
-            searchBooks();
-        } else {
-            setBooksList([]);
-        }
+            //searchBooks();
+        //} else {
+            //setBooksList([]);
+        //}
     }
 
     return (
