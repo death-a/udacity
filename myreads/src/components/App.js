@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import './App.css';
-import * as BooksAPI from './BooksAPI';
+import '../css/App.css';
+import * as BooksAPI from '../utils/BooksAPI';
 import BookShelf from './BookShelf';
 import SearchBooks from './SearchBooks';
 

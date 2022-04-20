@@ -1,6 +1,6 @@
 import BooksList from "./BooksList";
 import { useState, useEffect } from "react";
-import * as BooksAPI from './BooksAPI';
+import * as BooksAPI from '../utils/BooksAPI';
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -26,26 +26,6 @@ const SearchBooks = ({ shelfWiseBooks, updateShelf }) => {
         return () => clearTimeout(timeOut);
     }, [searchText]);
 
-    const searchQuery = (query) => {
-        setSearchText(query);
-        //if(query !== "") {
-            const searchBooks = async () => {
-                const res = await BooksAPI.search(query, 20);
-                console.log("search result", res);
-                if(res !== undefined) {
-                    console.log("search query", query);
-                    setBooksList(res);
-                } else {
-                    console.log("search query error", query);
-                    setBooksList([]);
-                }
-            };
-            //searchBooks();
-        //} else {
-            //setBooksList([]);
-        //}
-    }
-
     return (
         <div className="search-books">
             <div className="search-books-bar">
@@ -54,7 +34,7 @@ const SearchBooks = ({ shelfWiseBooks, updateShelf }) => {
                     <input type="text"
                         placeholder="Search by title, author, or ISBN"
                         value={searchText} 
-                        onChange={(event) => searchQuery(event.target.value)} />
+                        onChange={(event) => setSearchText(event.target.value)} />
                 </div>
             </div>
             <div className="search-books-results">
