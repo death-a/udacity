@@ -34,7 +34,7 @@ const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
                     style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: ("imageLinks" in book) ? `url(${book.imageLinks['smallThumbnail']})` : ``
+                        backgroundImage: ("imageLinks" in book) ? `url(${book.imageLinks['smallThumbnail']})` : ''
                         }}>
                 </div>
                 <div className="book-shelf-changer">
