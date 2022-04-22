@@ -1,16 +1,15 @@
 import Shelf from "./Shelf";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { useState, useEffect } from "react";
 
-const BookShelf = ({ booksList, shelfWiseBooks, updateShelf}) => {
-    const [shelfBooks, setshelfBooks] = useState({})
+const BookShelf = ({ username, booksList, shelfWiseBooks, updateShelf, logOutUser}) => {
+    const [shelfBooks, setshelfBooks] = useState({});
+    const btnText = (username !== null) ? "Log Out" : "Log In";
+    let navigate = useNavigate();
 
     useEffect(() => {
         const createBookShelvesList = () => {
-            //const shelves = [ 'currentlyReading', 'wantToRead', 'read' ];
-            //console.log("BookShelf", booksList);
-            //console.log("BookShelf", shelfWiseBooks);
             let shelvesIn = {};
             if(shelfWiseBooks !== undefined) {
                 for(const shelf of Object.keys(shelfWiseBooks)) {
@@ -28,10 +27,19 @@ const BookShelf = ({ booksList, shelfWiseBooks, updateShelf}) => {
         createBookShelvesList();
     }, [booksList, shelfWiseBooks])
 
+    const handleLogInOut = (e) => {
+        if(btnText === "Log In") {
+            navigate("/login");
+        } else {
+            logOutUser();
+        }
+    }
+
     return (
         <div className="list-books">
             <div className="list-books-title">
-                <h1>MyReads</h1>
+                <h1>{(username !== null) ? username + "'s " : "My"}Reads</h1>
+                <button className="login-button" onClick={handleLogInOut} >{btnText}</button>
             </div>
             <div className="list-books-content">
                 <Shelf booksList={shelfBooks} updateShelf={updateShelf} />

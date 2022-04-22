@@ -14,14 +14,18 @@ body,
 /* main page */
 
 .list-books-title {
-  padding: 10px 0;
+  padding: 10px 0px;
   background: #2e7c31;
   text-align: center;
+  width: 100%;
+  border: 1px soild black;
+  display: inline-block;
 }
 .list-books-title h1 {
   font-weight: 400;
   margin: 0;
   color: white;
+  display: inline-block;
 }
 
 .list-books-content {
@@ -175,4 +179,212 @@ body,
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+/* LogIn Page */
+
+.create-user-form {
+  padding: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  display: flex;
+  /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 0 6px rgba(0, 0, 0, 0.23);*/
+}
+
+.create-user-details {
+  margin-left: 10px;
+}
+
+.create-user-details-input {
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  margin-bottom: 10px;
+  font-size: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: 0;
+}
+
+.create-user-loggedin {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
+.button-login {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 6px;
+  color: #3D3D3D;
+  background: #fff;
+  border: none;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-login:focus {
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+.button-create-user {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: #2e7c31;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-create-user:hover,
+.button-create-user:focus {
+  background-color: #68ad6a;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.button-create-user:hover {
+  transform: translateY(-1px);
+}
+
+.button-create-user:active {
+  background-color: #548f56;
+  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+.create-user-div {
+  position: relative;
+  width: 100%;
+  top: 0;
+  border-bottom: 1px solid #d5d8df;
+  display: flex;
+  padding-top: 10px;
+}
+
+.create-user-input {
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  font-size: 14px;
+  border: 0;
+  outline: none;
+}
+
+.password-visibility {
+  cursor: pointer;
+  padding: 10px;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.checkbox-loggedin {
+  width: 20px;
+  height: 20px;
+  accent-color: #2e7c31;
+}
+
+.checkbox-message {
+  width: 90%;
+  border: 0px solid #ccc;
+  position: relative;
+  margin-left: 10px;
+}
+
+.login-button {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-block;
+  fill: currentcolor;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: absolute;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+  right: 20px;
+  top: 10px;
+}
+
+.login-button:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.login-button:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.login-button:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.login-button:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.login-button:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.login-button:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.login-button:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.login-button:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }

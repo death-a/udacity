@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import BookInfo from './BookInfo';
 
 const BooksList = ({ books, onUpdateShelf, shelfWiseBooks }) => {
-    //console.log("BooksList", books);
-    //console.log("BooksList", shelfWiseBooks);
+    
     return (
         books.map((book) => (
             <li key={book.id}>

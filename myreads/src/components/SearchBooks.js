@@ -4,17 +4,14 @@ import * as BooksAPI from '../utils/BooksAPI';
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const SearchBooks = ({ shelfWiseBooks, updateShelf }) => {
+const SearchBooks = ({ shelfWiseBooks, updateShelf, token }) => {
     const [booksList, setBooksList] = useState([]);
     const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
-        //console.log("search", searchText);
         const timeOut = setTimeout(async () => {
-            //console.log("search query", searchText);
             if(searchText !== "") {
-                const res = await BooksAPI.search(searchText, 20);
-                //console.log("search", res);
+                const res = await BooksAPI.search(searchText, 20, getHeaders(token));
                 if(res !== undefined) {
                     ("error" in res) ? setBooksList(res.items) : setBooksList(res);
                 }
@@ -24,7 +21,14 @@ const SearchBooks = ({ shelfWiseBooks, updateShelf }) => {
         }, 500);
 
         return () => clearTimeout(timeOut);
-    }, [searchText]);
+    }, [searchText, token]);
+
+    const getHeaders = (tokn) => {
+        return {
+            Accept: "application/json",
+            Authorization: tokn,
+        };
+    }
 
     return (
         <div className="search-books">

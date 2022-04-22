@@ -12,19 +12,15 @@ const BookInfo = ({ book, onChangeShelf, shelfWiseBooks }) => {
                         shelfval = shelf;
                     }
                 }
-            } else {
-                console.log("Shelf Wise Books array is not present");
             }
         }
         return shelfval;
     }
 
-    //console.log("BookInfo", getShelfValue());
     const shelfChange = (e) => {
         const selectedShelf = e.target.value;
         if(getShelfValue() !== selectedShelf) {
-            onChangeShelf(book, selectedShelf, (shelfWiseBooks !== undefined));
-            //setShelfValue(selectedShelf);
+            onChangeShelf(book, selectedShelf, (!("shelf" in book) && getShelfValue() === "none"));
         }
     }
     return (
