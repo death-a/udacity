@@ -11,6 +11,10 @@ User can also use the `Search` functionality by clicking on the the `+` button l
 
 In the Search page, user can search for any book available and can either add to a shelf or move to another shelf if the book is already existing on any one of the user's shelf.
 
+### Additional Features:
+
+1. Log In/Sign Up Feature - Users can login to the app and each users bookshelves state is maintained
+
 ## Installation Instructions
 
 1. Clone the project into any folder on your local machine 
