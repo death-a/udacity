@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { validUsername, validPassword } from '../utils/Regex';
@@ -10,42 +11,62 @@ const LogIn = ({ handleLogIn, handleSignUp }) => {
         password: "",
         showPassword: false,
     });
+    const [errmsg, setErrMsg] = useState("");
 
     const onLogIn = (e) => {
         e.preventDefault();
-        let matchedNamePass = false;
+        if(username === "" && values.password === "") {
+            setErrMsg("");
+        }
+        let matchUser = false;
         const users = JSON.parse(localStorage.getItem("users"));
         if (users !== null) {
             for (const user of users) {
-                if (user["username"] === username && user["password"] === values.password) {
-                    matchedNamePass = true;
+                if (user["username"] === username && user["password"] !== values.password) {
+                    setErrMsg('Username Password mismatch');
+                    matchUser = true;
+                } else if (user["username"] === username && user["password"] === values.password) {
                     handleLogIn(user);
+                    matchUser = true;
                 }
             }
-        } else {
-            console.log("User does not exist. Please create new User");
         }
-        if (!matchedNamePass) {
-            console.log("Username or Password Incorrect. Please try again.");
+        if(!matchUser) {
+            setErrMsg("User does not exist in database. Please Sign Up!");
         }
     }
 
     const onSignUp = (e) => {
         e.preventDefault();
-        let errName = false, errPass = false;
+        let errUserName = false, errPass = false, errName = false, userExists = false;
         
         if(!validUsername.test(username)) {
-           errName = true;
+            errUserName = true;
         }
         if(!validPassword.test(values.password)) {
             errPass = true;
         }
-        if(!errName && !errPass) {
+        if(name.trim() === "") {
+            errName = true;
+        }
+        const users = JSON.parse(localStorage.getItem("users"));
+        if (users !== null) {
+            for (const user of users) {
+                if (user["username"] === username) {
+                    userExists = true;
+                }
+            }
+        }
+        if(!errUserName && !errPass && !errName && !userExists) {
             handleSignUp(username, name, values.password);
-        } else if(errName) {
-            console.log("Username should be minimum 6 characters long and maximum 20, can have only letters, numbers, dot and underscore.");
+        } else if(errUserName) {
+            setErrMsg("Please check if all the rules for username are satisfied");
         } else if(errPass) {
-            console.log("Password can have minimum 4 characters, at least one capital letter, one smallcase letter and one number");
+            setErrMsg("Some of the rules for setting the password are not satisfied");
+        } else if(errName) {
+            setErrMsg("Name cannot be blank");
+        } else if(userExists) {
+            setErrMsg("Username already exists please enter a different username.");
         }
     }
 
@@ -57,8 +78,19 @@ const LogIn = ({ handleLogIn, handleSignUp }) => {
         event.preventDefault();
     };
 
+    const onhandleChangeUsername = (event) => {
+        setUsername(event.target.value);
+        setErrMsg("");
+    }
+
+    const onhandleChangeName = (event) => {
+        setName(event.target.value);
+        setErrMsg("");
+    }
+
     const handlePasswordChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
+        setErrMsg("");
     };
 
     return (
@@ -69,13 +101,14 @@ const LogIn = ({ handleLogIn, handleSignUp }) => {
             <Link to="/" className="close-search" >Go Back</Link>
             <form className="create-user-form">
                 <div className="create-user-details">
+                    <p className='create-user-errmsg'>{errmsg}</p>
                     <div className='create-user-div'>
                         <input type="text" 
                             className='create-user-input' 
                             name="username" 
                             placeholder="Username" 
                             value={username} 
-                            onChange={(event) => setUsername(event.target.value)} />
+                            onChange={(event) => onhandleChangeUsername(event)} />
                     </div>
                     {
                         (signUp) ?
@@ -85,7 +118,7 @@ const LogIn = ({ handleLogIn, handleSignUp }) => {
                                 name="name" 
                                 placeholder="Name" 
                                 value={name} 
-                                onChange={(event) => setName(event.target.value)} /> 
+                                onChange={(event) => onhandleChangeName(event)} /> 
                         </div>
                                 : 
                         ''
@@ -116,12 +149,12 @@ const LogIn = ({ handleLogIn, handleSignUp }) => {
                                 </button>
                                 <button name="olduser" 
                                     className="button-login" 
-                                    onClick={() => { setSignUp(false) }}>
+                                    onClick={() => { setSignUp(false); setErrMsg(""); }}>
                                     Already a User?
                                 </button>
-                        </div>
-                                : 
-                        ""
+                            </div>
+                            : 
+                            ""
                     }
                     {
                         (!signUp) ?
@@ -133,17 +166,37 @@ const LogIn = ({ handleLogIn, handleSignUp }) => {
                                 </button>
                                 <button name="newuser" 
                                     className="button-login" 
-                                    onClick={() => { setSignUp(true) }}>
+                                    onClick={() => { setSignUp(true); setErrMsg(""); }}>
                                     New User? Click here
                                 </button>
                             </div>
                                 : 
                             ""
                     }
+                    {
+                        (signUp) ?
+                            <div style={{ fontSize: "11px", color: "#737373", marginTop: "20px" }}>
+                                <p><strong>Rules for Username:</strong><br></br>
+                                1. min 6 characters long<br></br>
+                                2. max 20 characters<br></br>
+                                3. allowed letters, numbers, dot and underscore.</p>
+                                
+                                <p><strong>Rules for Password:</strong><br></br>
+                                1. min 4 characters<br></br>
+                                2. at least one capital letter, one smallcase letter and one number</p>
+                            </div>
+                            :
+                            ""
+                    }
                 </div>
             </form>
         </div>
     )
+}
+
+LogIn.propTypes = {
+    handleLogIn: PropTypes.func.isRequired,
+    handleSignUp: PropTypes.func.isRequired,
 }
 
 export default LogIn;

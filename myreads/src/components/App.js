@@ -8,7 +8,7 @@ import LogIn from './LogIn';
 
 function App() {
   let navigate = useNavigate();
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState("");
   const [booksList, setBooksList] = useState([]);
   const [shelfBookIDs, setShelfBookIDs] = useState({});
   const [token, setToken] = useState(BooksAPI.getToken());
@@ -20,16 +20,13 @@ function App() {
       setShelfWiseBookIds(res);
     }
     getAllBooks();
-
+    
     if(localStorage.getItem("current_usertoken") !== null) {
       setUsername(JSON.parse(localStorage.getItem("current_username")));
     } else {
-      setUsername(null);
+      setUsername("");
     }
 
-    return () => {
-      localStorage.removeItem("temp_token");
-    };
   }, [token]);
 
   const getHeaders = (tokn) => {

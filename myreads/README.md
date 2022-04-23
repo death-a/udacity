@@ -5,11 +5,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 MyReads app is a books categorizing app that helps a user to categorize their books into 3 main categories viz.,\
 `Currently Reading`, `Want To Read` and `Read`
 
-User can move a book from one category to another with the help of a dropdown menu attached to each book.
+Users can move a book from one category to another with the help of a dropdown menu attached to each book.
 
-User can also use the `Search` functionality by clicking on the the `+` button located at the bottom right corner of the main page.
+> With the new login feature, search functionality is available only after login.
+Users who have signed up and logged in, can now use the `Search` functionality by clicking on the the `+` button located at the bottom right corner of the main page.
 
-In the Search page, user can search for any book available and can either add to a shelf or move to another shelf if the book is already existing on any one of the user's shelf.
+In the Search page, users can search for any book available and can either add to a shelf or move to another shelf if the book is already existing on any one of the user's shelf.
 
 ### Additional Features:
 

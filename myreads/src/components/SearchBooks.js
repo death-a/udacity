@@ -53,6 +53,7 @@ const SearchBooks = ({ shelfWiseBooks, updateShelf, token }) => {
 SearchBooks.propTypes = {
     shelfWiseBooks: PropTypes.object.isRequired,
     updateShelf: PropTypes.func.isRequired,
+    token: PropTypes.string.isRequired,
 }
 
 export default SearchBooks;
